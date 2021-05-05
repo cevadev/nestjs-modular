@@ -6,11 +6,13 @@ import { UsersModule } from './users/users.module';
 import { ProductsModule } from './products/products.module';
 import { DatabaseModule } from './database/database.module';
 
+import { environments } from './environments';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
-      //indicamos que archivo de entorno va a leer.
-      envFilePath: '.env',
+      //de acuerdo a la variable de entorno en el package.json cargará el archivo de entorno indicado
+      envFilePath: environments[process.env.NODE_ENV] || '.env',
       //indicamos que el ConfigModule estará disponible para todos los modulos y servicios en la app
       isGlobal: true,
     }),
