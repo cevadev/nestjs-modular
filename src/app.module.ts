@@ -11,6 +11,9 @@ import { environments } from './environments';
 //importamos nuestro archivo de configuracion
 import config from './config';
 
+//importamos JOI
+import * as Joi from 'joi';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,6 +23,13 @@ import config from './config';
       load: [config],
       //indicamos que el ConfigModule estará disponible para todos los modulos y servicios en la app
       isGlobal: true,
+      //indicamos que vamos hacer una validacion de esquema
+      validationSchema: Joi.object({
+        //indicamos lo que queremos validar, la app funcionara solo si se pasan las propiedades especificadas
+        API_KEY: Joi.number().required(),
+        DATABASE_NAME: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+      }),
     }),
     HttpModule,
     UsersModule,
